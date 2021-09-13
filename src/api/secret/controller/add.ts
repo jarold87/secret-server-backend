@@ -33,13 +33,15 @@ class AddSecret extends SecretController {
     }
 
     protected createSecretData(params: object) : SecretSchema {
-        const expireAt = Number(params['expireAfter']) ?
-            new Date().getTime() + Number(params['expireAfter']) * 60 * 1000 : 0;
+        const expireAfter = Number(params['expireAfter']) || 0;
+        const expireAt = expireAfter ?
+            new Date().getTime() + expireAfter * 60 * 1000 : 0;
+        const remainingViews = Number(params['expireAfterViews']) || 0;
         return {
             hash: this.generateHash(),
             text: params['secret'],
-            expireAfterInMin: Number(params['expireAfter']),
-            remainingViews: Number(params['expireAfterViews']),
+            expireAfterInMin: expireAfter,
+            remainingViews: remainingViews,
             createdAt: new Date().getTime(),
             expireAt: expireAt
         };
@@ -50,9 +52,6 @@ class AddSecret extends SecretController {
     }
 
     protected generateHash() : string {
-        // TODO
-        // return String(4567829 + new Date().getTime());
-
         const crypto = require('crypto');
         const current_date = (new Date()).valueOf().toString();
         const random = Math.random().toString();
