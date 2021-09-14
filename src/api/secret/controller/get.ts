@@ -1,6 +1,5 @@
 import SecretController from "./secretController";
 import SecretSchema from '../model/interface/secretSchema';
-import SecretRepository from '../repository/secretRepository';
 
 class GetSecret extends SecretController {
 
@@ -34,7 +33,7 @@ class GetSecret extends SecretController {
     }
 
     protected getSecretData(hash: string): Promise<object> {
-        return SecretRepository.getSecretByHash(hash)
+        return this.repository.getSecretByHash(hash)
             .then((secret: SecretSchema|null) => {
                 if (secret === null) {
                     return Promise.resolve(null);

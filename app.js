@@ -11,9 +11,13 @@ app.use(express.json());
 const secretConfig = require('./dist/api/secret/config/secret.json');
 const loggerModule = require('./dist/logger/logger.js');
 const logger = loggerModule.getLogger();
+const secretRepository = require('./dist/api/secret/repository/secretRepository').default;
+const routing = require('./dist/api/routing.js').default;
 
-const ApiRouting = require('./dist/api/routing.js');
-ApiRouting.default.initRoutes(app, secretConfig, logger);
+routing.setConfig(secretConfig);
+routing.setLogger(logger);
+routing.setRepository(secretRepository);
+routing.initRoutes(app);
 
 app.get('/', (request, response) => {
     response.send('OK');

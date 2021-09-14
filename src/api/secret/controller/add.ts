@@ -1,6 +1,5 @@
 import SecretController from "./secretController";
 import SecretSchema from '../model/interface/secretSchema';
-import SecretRepository from '../repository/secretRepository';
 import {generateHash} from '../../../module/hashGenerator';
 
 class AddSecret extends SecretController {
@@ -12,7 +11,7 @@ class AddSecret extends SecretController {
         }
         const params = this.getBodyParams(request);
         const data = this.createSecretData(params);
-        SecretRepository.addSecret(data)
+        this.repository.addSecret(data)
             .then(() => {
                 response.send(data);
                 response.end();

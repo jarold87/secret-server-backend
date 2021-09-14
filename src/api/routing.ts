@@ -1,4 +1,6 @@
-import Secret from "./secret/config/interface/secret";
+import SecretConfig from "./secret/config/interface/secret";
+import SecretRepository from './secret/repository/secretRepository';
+
 import cors from './secret/middleware/cors';
 import add from './secret/controller/add';
 import get from './secret/controller/get';
@@ -6,12 +8,30 @@ import {Logger} from "winston";
 
 class ApiRouting {
 
-    public initRoutes(app, config: Secret, logger: Logger) {
+    protected config: SecretConfig;
+    protected logger: Logger;
+    protected repository: typeof SecretRepository;
 
-        add.setConfig(config);
-        get.setConfig(config);
-        add.setLogger(logger);
-        get.setLogger(logger);
+    public setConfig(config: SecretConfig) {
+        this.config = config;
+    }
+
+    public setLogger(logger: Logger) {
+        this.logger = logger;
+    }
+
+    public setRepository(repository: typeof SecretRepository) {
+        this.repository = repository;
+    }
+
+    public initRoutes(app) {
+
+        add.setConfig(this.config);
+        get.setConfig(this.config);
+        add.setLogger(this.logger);
+        get.setLogger(this.logger);
+        add.setRepository(this.repository);
+        get.setRepository(this.repository);
 
         app.use(cors.use);
         app.post('/api/secret', add.addSecret.bind(add));
