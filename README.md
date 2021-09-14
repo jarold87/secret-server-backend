@@ -6,7 +6,11 @@
 
 ## Run
 
-**Node app**
+**Simple start gulp + app**
+
+    npm start
+    
+**gulp + app with specified port**
 
     gulp && node app.js [?port]
     

@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "gulp && node app.js"
   },
   "author": "Dzsi",
   "dependencies": {
