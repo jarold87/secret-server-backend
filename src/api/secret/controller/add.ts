@@ -1,6 +1,7 @@
 import SecretController from "./secretController";
 import SecretSchema from '../model/interface/secretSchema';
 import SecretRepository from '../repository/secretRepository';
+import {generateHash} from '../../../module/hashGenerator';
 
 class AddSecret extends SecretController {
 
@@ -11,7 +12,7 @@ class AddSecret extends SecretController {
         }
         const params = this.getBodyParams(request);
         const data = this.createSecretData(params);
-        this.saveSecret(data)
+        SecretRepository.addSecret(data)
             .then(() => {
                 response.send(data);
                 response.end();
@@ -38,24 +39,13 @@ class AddSecret extends SecretController {
             new Date().getTime() + expireAfter * 60 * 1000 : 0;
         const remainingViews = Number(params['expireAfterViews']) || 0;
         return {
-            hash: this.generateHash(),
+            hash: generateHash(),
             text: params['secret'],
             expireAfterInMin: expireAfter,
             remainingViews: remainingViews,
             createdAt: new Date().getTime(),
             expireAt: expireAt
         };
-    }
-
-    protected saveSecret(data: SecretSchema): Promise<any> {
-        return SecretRepository.addSecret(data);
-    }
-
-    protected generateHash() : string {
-        const crypto = require('crypto');
-        const current_date = (new Date()).valueOf().toString();
-        const random = Math.random().toString();
-        return crypto.createHash('sha1').update(current_date + random).digest('hex');
     }
 
 }

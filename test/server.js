@@ -1,11 +1,14 @@
 const expect = require("chai").expect;
 const request = require("request");
+const dotenv = require('dotenv');
+dotenv.config();
+const port = process.env.TEST_APP_PORT || 3000;
 
 context('Server', function() {
 
     context('health check', function() {
 
-        let url = "http://localhost:3000/";
+        let url = "http://localhost:" + port + "/";
 
         it("response status 200", function(done) {
             request(url, function(error, response) {

@@ -1,8 +1,11 @@
 const expect = require("chai").expect;
 const request = require("request");
+const dotenv = require('dotenv');
+dotenv.config();
+const port = process.env.TEST_APP_PORT || 3000;
 
 const postDefaultOptions = {
-    uri: 'http://localhost:3000/api/secret',
+    uri: 'http://localhost:' + port + '/api/secret',
     method: 'POST',
     json: {
         "secret": "test",
@@ -11,7 +14,7 @@ const postDefaultOptions = {
     }
 };
 
-const getUrl = 'http://localhost:3000/api/secret/';
+const getUrl = 'http://localhost:' + port + '/api/secret/';
 
 context('Secret', function() {
 

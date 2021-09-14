@@ -1,4 +1,5 @@
 import winston = require("winston");
+import {Logger} from "winston";
 
 const logger = winston.createLogger({
     level: 'info',
@@ -16,4 +17,6 @@ const logger = winston.createLogger({
     ],
 });
 
-module.exports = logger;
+export function getLogger(): Logger {
+    return logger;
+}

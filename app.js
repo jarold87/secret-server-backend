@@ -1,12 +1,16 @@
 const args = process.argv.slice(2);
 const port = 3000|args[0];
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require("express");
 const app = express();
 app.use(express.json());
 
 const secretConfig = require('./dist/api/secret/config/secret.json');
-const logger = require('./dist/logger/logger.js');
+const loggerModule = require('./dist/logger/logger.js');
+const logger = loggerModule.getLogger();
 
 const ApiRouting = require('./dist/api/routing.js');
 ApiRouting.default.initRoutes(app, secretConfig, logger);
