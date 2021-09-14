@@ -6,9 +6,10 @@ const app = express();
 app.use(express.json());
 
 const secretConfig = require('./dist/api/secret/config/secret.json');
+const logger = require('./dist/logger/logger.js');
 
 const ApiRouting = require('./dist/api/routing.js');
-ApiRouting.default.initRoutes(app, secretConfig);
+ApiRouting.default.initRoutes(app, secretConfig, logger);
 
 app.get('/', (request, response) => {
     response.send('OK');
@@ -16,5 +17,8 @@ app.get('/', (request, response) => {
 });
 
 app.listen(port, () => {
-    console.log(`app listening at http://localhost:${port}`);
+    logger.log({
+        level: 'info',
+        message: `app listening at http://localhost:${port}`
+    });
 });

@@ -1,8 +1,10 @@
-# Description #
+# Secret-Server Backend
+
+## Description
 - add new secret
 - read a secret by hash
 
-# Run #
+## Run
 
 **Node app**
 
@@ -12,7 +14,7 @@
 
     npm test
 
-# Routes #
+## Routes
 
 **[GET] /api/secret/:hash**
 
@@ -39,7 +41,8 @@ JSON post data
 
 Response : Same as /api/secret/:hash
 
-# Env vars #
+## Env vars
+
 - SOME_32BYTE_BASE64_STRING - Mongo encryptionKey
 - SOME_64BYTE_BASE64_STRING - Mongo signingKey
 - MONGO_HOST
@@ -48,7 +51,3 @@ Response : Same as /api/secret/:hash
 - MONGO_USER
 - MONGO_PASS
 - MONGO_PARAMS - Mongo admin connection URL query params (e.g.: ?authSource=admin)
-
-# TODO #
-- docker fájl
-- docker mongo nyitott portot megszuntetni

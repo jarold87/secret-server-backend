@@ -1,11 +1,17 @@
 import SecretConfig from "../config/interface/secret";
+import {Logger} from "winston";
 
 class SecretController {
 
     protected config: SecretConfig;
+    protected logger: Logger;
 
     public setConfig(config: SecretConfig) {
         this.config = config;
+    }
+
+    public setLogger(logger: Logger) {
+        this.logger = logger;
     }
 
     protected getConfig() : SecretConfig {
@@ -17,7 +23,10 @@ class SecretController {
     }
 
     protected throwError(response, err) {
-        console.error(err);
+        this.logger.log({
+            level: 'error',
+            message: err
+        });
         response.sendStatus(500);
     }
 
