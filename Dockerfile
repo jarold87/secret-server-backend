@@ -1,4 +1,4 @@
-FROM node:12.22.0
+FROM node:12.22.6
 
 ADD . /var/www/secret-server
 WORKDIR /var/www/secret-server
