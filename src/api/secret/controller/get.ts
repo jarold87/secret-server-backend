@@ -3,23 +3,25 @@ import SecretSchema from '../model/interface/secretSchema';
 
 class GetSecret extends SecretController {
 
-    public getSecret(request, response) : void {
+    public getSecret(request, response) : Promise<void> {
         if (this.isValidRequest(request) === false) {
             this.throwInvalidRequest(response);
-            return;
+            return Promise.resolve();
         }
         const hash = this.getGetParams(request)['hash'];
-        this.getSecretData(hash)
+        return this.getSecretData(hash)
             .then((secret) => {
                 if (secret === null) {
                     this.throwInvalidRequest(response);
-                    return;
+                    return Promise.resolve();
                 }
                 response.send(secret);
                 response.end();
+                return Promise.resolve();
             })
             .catch((err) => {
                 this.throwError(response, err);
+                return Promise.resolve();
             });
     }
 

@@ -14,6 +14,13 @@ class SecretRepository {
         this.client = client;
     }
 
+    public count() : Promise<number> {
+        return this.getConnection()
+            .then(() => {
+                return SecretModel.countDocuments();
+            });
+    }
+
     public getSecretByHash(hash: string) : Promise<SecretSchema|null> {
         return this.getConnection()
             .then(() => {

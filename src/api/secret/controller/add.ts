@@ -4,20 +4,22 @@ import {generateHash} from '../../../module/hashGenerator';
 
 class AddSecret extends SecretController {
 
-    public addSecret(request, response) {
+    public addSecret(request, response) : Promise<void> {
         if (this.isValidRequest(request) === false) {
             this.throwInvalidRequest(response);
-            return;
+            return Promise.resolve();
         }
         const params = this.getBodyParams(request);
         const data = this.createSecretData(params);
-        this.repository.addSecret(data)
+        return this.repository.addSecret(data)
             .then(() => {
                 response.send(data);
                 response.end();
+                return Promise.resolve();
             })
             .catch((err) => {
                 this.throwError(response, err);
+                return Promise.resolve();
             });
     }
 
