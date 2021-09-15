@@ -8,6 +8,12 @@ const secretConfig: SecretConfig = require('../config/secret.json');
 
 class SecretRepository {
 
+    protected client: typeof MongoClient;
+
+    public setClient(client: typeof MongoClient) {
+        this.client = client;
+    }
+
     public getSecretByHash(hash: string) : Promise<SecretSchema|null> {
         return this.getConnection()
             .then(() => {
@@ -34,7 +40,7 @@ class SecretRepository {
     }
 
     protected getConnection() : Promise<Mongoose> {
-        return MongoClient.getAdminConnection(this.getDbName());
+        return this.client.getAdminConnection(this.getDbName());
     }
 
     protected getDbName() : string {

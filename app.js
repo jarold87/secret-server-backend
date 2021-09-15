@@ -12,8 +12,10 @@ const secretConfig = require('./dist/api/secret/config/secret.json');
 const loggerModule = require('./dist/logger/logger.js');
 const logger = loggerModule.getLogger();
 const secretRepository = require('./dist/api/secret/repository/secretRepository').default;
+const mongoClient = require('./dist/mongo/client').default;
 const routing = require('./dist/api/routing.js').default;
 
+secretRepository.setClient(mongoClient);
 routing.setConfig(secretConfig);
 routing.setLogger(logger);
 routing.setRepository(secretRepository);
